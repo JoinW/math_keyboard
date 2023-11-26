@@ -344,6 +344,7 @@ class _Buttons extends StatelessWidget {
                           _BasicButton(
                             flex: config.flex,
                             label: config.label,
+                            fontSize: config.fontSize,
                             onTap: config.args != null
                                 ? () => controller.addFunction(
                                       config.value,
@@ -401,15 +402,16 @@ class _Buttons extends StatelessWidget {
 /// Widget displaying a single keyboard button.
 class _BasicButton extends StatelessWidget {
   /// Constructs a [_BasicButton].
-  const _BasicButton({
-    Key? key,
-    required this.flex,
-    this.label,
-    this.icon,
-    this.onTap,
-    this.asTex = false,
-    this.highlightLevel = 0,
-  })  : assert(label != null || icon != null),
+  const _BasicButton(
+      {Key? key,
+      required this.flex,
+      this.label,
+      this.icon,
+      this.onTap,
+      this.fontSize,
+      this.asTex = false,
+      this.highlightLevel = 0})
+      : assert(label != null || icon != null),
         super(key: key);
 
   /// The flexible flex value.
@@ -430,6 +432,8 @@ class _BasicButton extends StatelessWidget {
   /// Whether this button should be highlighted.
   final int highlightLevel;
 
+  final double? fontSize;
+
   @override
   Widget build(BuildContext context) {
     Widget result;
@@ -442,7 +446,7 @@ class _BasicButton extends StatelessWidget {
       result = Math.tex(
         label!,
         options: MathOptions(
-          fontSize: 22,
+          fontSize: fontSize ?? 22,
           color: Colors.white,
         ),
       );

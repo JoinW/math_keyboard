@@ -37,6 +37,7 @@ class BasicKeyboardButtonConfig extends KeyboardButtonConfig {
     this.highlighted = false,
     List<String> keyboardCharacters = const [],
     int? flex,
+    this.fontSize,
   }) : super(
           flex: flex,
           keyboardCharacters: keyboardCharacters,
@@ -56,6 +57,9 @@ class BasicKeyboardButtonConfig extends KeyboardButtonConfig {
 
   /// The highlight level of this button.
   final bool highlighted;
+
+  //custom Font Size
+  final double? fontSize;
 }
 
 /// Class representing a button configuration of the Delete Button.
