@@ -83,7 +83,11 @@ class SubmitButtonConfig extends KeyboardButtonConfig {
 /// Class representing a button configuration of the Page Toggle Button.
 class PageButtonConfig extends KeyboardButtonConfig {
   /// Constructs a [PageButtonConfig].
-  const PageButtonConfig({int? flex}) : super(flex: flex);
+  const PageButtonConfig({int? flex, required this.pageNum})
+      : super(flex: flex);
+
+  /// page number to toggle to.
+  final int pageNum;
 }
 
 /// List of keyboard button configs for the digits from 0-9.
@@ -204,7 +208,7 @@ final functionKeyboard = [
     ),
   ],
   [
-    const PageButtonConfig(flex: 3),
+    const PageButtonConfig(flex: 3, pageNum: 0),
     const BasicKeyboardButtonConfig(
       label: '(',
       value: '(',
@@ -263,7 +267,7 @@ final standardKeyboard = [
     DeleteButtonConfig(),
   ],
   [
-    const PageButtonConfig(),
+    const PageButtonConfig(pageNum: 1),
     _digitButtons[0],
     PreviousButtonConfig(),
     NextButtonConfig(),

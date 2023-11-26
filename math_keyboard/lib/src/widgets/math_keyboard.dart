@@ -21,6 +21,9 @@ enum MathKeyboardType {
 
   /// Keyboard for number input only.
   numberOnly,
+
+  /// custo keyboard
+  custom,
 }
 
 /// Widget displaying the math keyboard.
@@ -72,6 +75,18 @@ class MathKeyboard extends StatelessWidget {
   /// Defaults to `const EdgeInsets.only(bottom: 4, left: 4, right: 4),`.
   final EdgeInsets padding;
 
+  List<List<List<KeyboardButtonConfig>>> _getKeyboardPages(
+      MathKeyboardType type) {
+    switch (type) {
+      case MathKeyboardType.expression:
+        return [numberKeyboard, functionKeyboard];
+      case MathKeyboardType.custom:
+        return [numberKeyboard, functionKeyboard];
+      case MathKeyboardType.numberOnly:
+        return [numberKeyboard];
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     final curvedSlideAnimation = CurvedAnimation(
@@ -109,7 +124,8 @@ class MathKeyboard extends StatelessWidget {
                           ),
                           child: Column(
                             children: [
-                              if (type != MathKeyboardType.numberOnly)
+                              if (type != MathKeyboardType.numberOnly &&
+                                  variables.isNotEmpty)
                                 _Variables(
                                   controller: controller,
                                   variables: variables,
@@ -120,12 +136,7 @@ class MathKeyboard extends StatelessWidget {
                                 ),
                                 child: _Buttons(
                                   controller: controller,
-                                  page1: type == MathKeyboardType.numberOnly
-                                      ? numberKeyboard
-                                      : standardKeyboard,
-                                  page2: type == MathKeyboardType.numberOnly
-                                      ? null
-                                      : functionKeyboard,
+                                  pages: _getKeyboardPages(type),
                                   onSubmit: onSubmit,
                                 ),
                               ),
@@ -286,8 +297,7 @@ class _Buttons extends StatelessWidget {
   const _Buttons({
     Key? key,
     required this.controller,
-    this.page1,
-    this.page2,
+    this.pages,
     this.onSubmit,
   }) : super(key: key);
 
@@ -296,15 +306,17 @@ class _Buttons extends StatelessWidget {
   final MathFieldEditingController controller;
 
   /// The buttons to display.
-  final List<List<KeyboardButtonConfig>>? page1;
+  //final List<List<KeyboardButtonConfig>>? page1;
 
   /// The buttons to display.
-  final List<List<KeyboardButtonConfig>>? page2;
+  //final List<List<KeyboardButtonConfig>>? page2;
 
   /// Function that is called when the enter / submit button is tapped.
   ///
   /// Can be `null`.
   final VoidCallback? onSubmit;
+
+  final List<List<List<KeyboardButtonConfig>>>? pages;
 
   @override
   Widget build(BuildContext context) {
@@ -313,8 +325,9 @@ class _Buttons extends StatelessWidget {
       child: AnimatedBuilder(
         animation: controller,
         builder: (context, child) {
-          final layout =
-              controller.secondPage ? page2! : page1 ?? numberKeyboard;
+          final layout = controller.pageIndex != -1
+              ? pages![controller.pageIndex]
+              : numberKeyboard;
           return Column(
             children: [
               for (final row in layout)
@@ -350,7 +363,7 @@ class _Buttons extends StatelessWidget {
                                 ? null
                                 : CustomKeyIcons.key_symbols,
                             label: controller.secondPage ? '123' : null,
-                            onTap: controller.togglePage,
+                            onTap: () => controller.setPage(config.pageNum),
                             highlightLevel: 1,
                           )
                         else if (config is PreviousButtonConfig)
