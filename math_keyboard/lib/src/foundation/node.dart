@@ -149,8 +149,16 @@ class TeXFunction extends TeX {
     switch (type) {
       case TeXArg.braces:
         return '{';
+      case TeXArg.bracesSuper:
+        return '^{';
+      case TeXArg.bracesSub:
+        return '_{';
       case TeXArg.brackets:
         return '[';
+      case TeXArg.bracketsSuper:
+        return '^[';
+      case TeXArg.bracketsSub:
+        return '_[';
       default:
         return '(';
     }
@@ -160,8 +168,12 @@ class TeXFunction extends TeX {
   String closingChar(TeXArg type) {
     switch (type) {
       case TeXArg.braces:
+      case TeXArg.bracesSuper:
+      case TeXArg.bracesSub:
         return '}';
       case TeXArg.brackets:
+      case TeXArg.bracketsSuper:
+      case TeXArg.bracketsSub:
         return ']';
       default:
         return ')';
@@ -238,10 +250,22 @@ enum TeXArg {
   /// In most of the cases, braces will be used. (E.g arguments of fractions).
   braces,
 
+  /// SuperScript
+  bracesSuper,
+
+  /// SubScript
+  bracesSub,
+
   /// [ ]
   ///
   /// Brackets are only used for the nth root at the moment.
   brackets,
+
+  /// SuperScript
+  bracketsSuper,
+
+  /// SubScript
+  bracketsSub,
 
   /// ()
   ///
