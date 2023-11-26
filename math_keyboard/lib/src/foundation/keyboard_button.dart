@@ -1,4 +1,6 @@
 import 'package:flutter/services.dart';
+import 'package:flutter/widgets.dart';
+import 'package:math_keyboard/src/custom_key_icons/custom_key_icons.dart';
 import 'package:math_keyboard/src/foundation/node.dart';
 
 /// Class representing a button configuration.
@@ -83,11 +85,14 @@ class SubmitButtonConfig extends KeyboardButtonConfig {
 /// Class representing a button configuration of the Page Toggle Button.
 class PageButtonConfig extends KeyboardButtonConfig {
   /// Constructs a [PageButtonConfig].
-  const PageButtonConfig({int? flex, required this.pageNum})
+  const PageButtonConfig(
+      {int? flex, required this.pageNum, this.icon, this.label})
       : super(flex: flex);
 
   /// page number to toggle to.
   final int pageNum;
+  final IconData? icon;
+  final String? label;
 }
 
 /// List of keyboard button configs for the digits from 0-9.
@@ -208,7 +213,7 @@ final functionKeyboard = [
     ),
   ],
   [
-    const PageButtonConfig(flex: 3, pageNum: 0),
+    const PageButtonConfig(flex: 3, pageNum: 0, label: '123'),
     const BasicKeyboardButtonConfig(
       label: '(',
       value: '(',
@@ -267,7 +272,7 @@ final standardKeyboard = [
     DeleteButtonConfig(),
   ],
   [
-    const PageButtonConfig(pageNum: 1),
+    const PageButtonConfig(pageNum: 1, icon: CustomKeyIcons.key_symbols),
     _digitButtons[0],
     PreviousButtonConfig(),
     NextButtonConfig(),
