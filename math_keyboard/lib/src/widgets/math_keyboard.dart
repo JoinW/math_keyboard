@@ -42,6 +42,7 @@ class MathKeyboard extends StatelessWidget {
       left: 4,
       right: 4,
     ),
+    this.customKeyboardPages,
   }) : super(key: key);
 
   /// The controller for editing the math field.
@@ -75,13 +76,15 @@ class MathKeyboard extends StatelessWidget {
   /// Defaults to `const EdgeInsets.only(bottom: 4, left: 4, right: 4),`.
   final EdgeInsets padding;
 
+  final List<List<List<KeyboardButtonConfig>>>? customKeyboardPages;
+
   List<List<List<KeyboardButtonConfig>>> _getKeyboardPages(
       MathKeyboardType type) {
     switch (type) {
       case MathKeyboardType.expression:
         return [standardKeyboard, functionKeyboard];
       case MathKeyboardType.custom:
-        return [numberKeyboard, functionKeyboard];
+        return customKeyboardPages!;
       case MathKeyboardType.numberOnly:
         return [numberKeyboard];
     }

@@ -27,7 +27,7 @@ class MathField extends StatefulWidget {
       this.onChanged,
       this.onSubmitted,
       this.opensKeyboard = true,
-      this.customKeyboard})
+      this.customKeyboardPages})
       : super(key: key);
 
   /// The controller for the math field.
@@ -120,7 +120,7 @@ class MathField extends StatefulWidget {
   /// use custom keyboard
   ///
   /// Can be `null`.
-  final Widget? customKeyboard;
+  final List<List<List<KeyboardButtonConfig>>>? customKeyboardPages;
 
   @override
   _MathFieldState createState() => _MathFieldState();
@@ -150,7 +150,7 @@ class _MathFieldState extends State<MathField> with TickerProviderStateMixin {
       );
   late var _controller = widget.controller ?? MathFieldEditingController();
 
-  late var customKeyboard = widget.customKeyboard;
+  late var customKeyboardPages = widget.customKeyboardPages;
 
   List<String> get _variables => [
         r'\pi',
@@ -333,17 +333,17 @@ class _MathFieldState extends State<MathField> with TickerProviderStateMixin {
           // to match the decimal separators.
           context: this.context,
           locale: Localizations.localeOf(this.context),
-          child: customKeyboard ??
-              MathKeyboard(
-                controller: _controller,
-                type: widget.keyboardType,
-                variables: _variables,
-                onSubmit: _submit,
-                // Note that we need to pass the insets state like this because the
-                // overlay context does not have the ancestor state.
-                insetsState: MathKeyboardViewInsetsState.of(this.context),
-                slideAnimation: _keyboardSlideController,
-              ),
+          child: MathKeyboard(
+            controller: _controller,
+            type: widget.keyboardType,
+            variables: _variables,
+            onSubmit: _submit,
+            // Note that we need to pass the insets state like this because the
+            // overlay context does not have the ancestor state.
+            insetsState: MathKeyboardViewInsetsState.of(this.context),
+            slideAnimation: _keyboardSlideController,
+            customKeyboardPages: customKeyboardPages,
+          ),
         );
       },
     );
