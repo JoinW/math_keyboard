@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter_math_fork/flutter_math.dart';
-import 'package:math_keyboard/src/custom_key_icons/custom_key_icons.dart';
 import 'package:math_keyboard/src/foundation/keyboard_button.dart';
 import 'package:math_keyboard/src/widgets/decimal_separator.dart';
 import 'package:math_keyboard/src/widgets/keyboard_button.dart';
@@ -321,16 +320,18 @@ class _Buttons extends StatelessWidget {
 
   final List<List<List<KeyboardButtonConfig>>>? pages;
 
+  List<List<KeyboardButtonConfig>> getLayout(int page) {
+    return page >= 0 && page < pages!.length ? pages![page] : numberKeyboard;
+  }
+
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: 230,
+      height: 56 * getLayout(controller.pageIndex).length.toDouble() + 10,
       child: AnimatedBuilder(
         animation: controller,
         builder: (context, child) {
-          final layout = controller.pageIndex != -1
-              ? pages![controller.pageIndex]
-              : numberKeyboard;
+          final layout = getLayout(controller.pageIndex);
           return Column(
             children: [
               for (final row in layout)
