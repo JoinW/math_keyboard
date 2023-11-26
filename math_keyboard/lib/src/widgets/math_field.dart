@@ -3,6 +3,7 @@ import 'package:flutter/scheduler.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_math_fork/flutter_math.dart';
 import 'package:math_expressions/math_expressions.dart';
+import 'package:math_keyboard/src/custom_key_icons/custom_key_icons.dart';
 import 'package:math_keyboard/src/foundation/keyboard_button.dart';
 import 'package:math_keyboard/src/foundation/math2tex.dart';
 import 'package:math_keyboard/src/foundation/node.dart';
@@ -16,18 +17,19 @@ import 'package:math_keyboard/src/widgets/view_insets.dart';
 /// UI in an [OverlayEntry].
 class MathField extends StatefulWidget {
   /// Constructs a [MathField] widget.
-  const MathField({
-    Key? key,
-    this.autofocus = false,
-    this.focusNode,
-    this.controller,
-    this.keyboardType = MathKeyboardType.expression,
-    this.variables = const ['x', 'y', 'z'],
-    this.decoration = const InputDecoration(),
-    this.onChanged,
-    this.onSubmitted,
-    this.opensKeyboard = true,
-  }) : super(key: key);
+  const MathField(
+      {Key? key,
+      this.autofocus = false,
+      this.focusNode,
+      this.controller,
+      this.keyboardType = MathKeyboardType.expression,
+      this.variables = const ['x', 'y', 'z'],
+      this.decoration = const InputDecoration(),
+      this.onChanged,
+      this.onSubmitted,
+      this.opensKeyboard = true,
+      this.customKeyboard})
+      : super(key: key);
 
   /// The controller for the math field.
   ///
@@ -116,6 +118,11 @@ class MathField extends StatefulWidget {
   /// Defaults to `true`.
   final bool opensKeyboard;
 
+  /// use custom keyboard
+  ///
+  /// Can be `null`.
+  final Widget? customKeyboard;
+
   @override
   _MathFieldState createState() => _MathFieldState();
 }
@@ -143,6 +150,8 @@ class _MathFieldState extends State<MathField> with TickerProviderStateMixin {
         descendantsAreFocusable: false,
       );
   late var _controller = widget.controller ?? MathFieldEditingController();
+
+  late var customKeyboard = widget.customKeyboard;
 
   List<String> get _variables => [
         r'\pi',
@@ -325,16 +334,17 @@ class _MathFieldState extends State<MathField> with TickerProviderStateMixin {
           // to match the decimal separators.
           context: this.context,
           locale: Localizations.localeOf(this.context),
-          child: MathKeyboard(
-            controller: _controller,
-            type: widget.keyboardType,
-            variables: _variables,
-            onSubmit: _submit,
-            // Note that we need to pass the insets state like this because the
-            // overlay context does not have the ancestor state.
-            insetsState: MathKeyboardViewInsetsState.of(this.context),
-            slideAnimation: _keyboardSlideController,
-          ),
+          child: customKeyboard ??
+              MathKeyboard(
+                controller: _controller,
+                type: widget.keyboardType,
+                variables: _variables,
+                onSubmit: _submit,
+                // Note that we need to pass the insets state like this because the
+                // overlay context does not have the ancestor state.
+                insetsState: MathKeyboardViewInsetsState.of(this.context),
+                slideAnimation: _keyboardSlideController,
+              ),
         );
       },
     );
