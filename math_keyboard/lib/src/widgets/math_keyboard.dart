@@ -79,7 +79,7 @@ class MathKeyboard extends StatelessWidget {
       MathKeyboardType type) {
     switch (type) {
       case MathKeyboardType.expression:
-        return [numberKeyboard, functionKeyboard];
+        return [standardKeyboard, functionKeyboard];
       case MathKeyboardType.custom:
         return [numberKeyboard, functionKeyboard];
       case MathKeyboardType.numberOnly:
