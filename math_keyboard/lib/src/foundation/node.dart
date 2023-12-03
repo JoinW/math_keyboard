@@ -194,8 +194,8 @@ class TeXFunction extends TeX {
 
     for (var i = 0; i < args.length; i++) {
       var argStr = _buildArgString(i, cursorColor: cursorColor);
-      if (buildStr.contains('#$i')) {
-        buildStr = buildStr.replaceFirst('#$i', argStr);
+      if (buildStr.contains('##$i')) {
+        buildStr = buildStr.replaceFirst('##$i', argStr);
       } else {
         buildStr += argStr;
       }
