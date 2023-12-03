@@ -27,6 +27,7 @@ class MathField extends StatefulWidget {
       this.onChanged,
       this.onSubmitted,
       this.opensKeyboard = true,
+      this.hideVariables = false,
       this.customKeyboardPages})
       : super(key: key);
 
@@ -116,6 +117,8 @@ class MathField extends StatefulWidget {
   ///
   /// Defaults to `true`.
   final bool opensKeyboard;
+
+  final bool hideVariables;
 
   /// use custom keyboard
   ///
@@ -336,7 +339,7 @@ class _MathFieldState extends State<MathField> with TickerProviderStateMixin {
           child: MathKeyboard(
             controller: _controller,
             type: widget.keyboardType,
-            variables: _variables,
+            variables: widget.hideVariables ? [] : _variables,
             onSubmit: _submit,
             // Note that we need to pass the insets state like this because the
             // overlay context does not have the ancestor state.
