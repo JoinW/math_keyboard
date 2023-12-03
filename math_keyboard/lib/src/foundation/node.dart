@@ -153,14 +153,12 @@ class TeXFunction extends TeX {
         return '^{';
       case TeXArg.bracesSub:
         return '_{';
+      case TeXArg.bracesDisplay:
+        return r'\left\{';
       case TeXArg.brackets:
-        return '[';
-      case TeXArg.bracketsSuper:
-        return '^[';
-      case TeXArg.bracketsSub:
-        return '_[';
+        return r'\left[';
       default:
-        return '(';
+        return r'\left(';
     }
   }
 
@@ -171,12 +169,12 @@ class TeXFunction extends TeX {
       case TeXArg.bracesSuper:
       case TeXArg.bracesSub:
         return '}';
+      case TeXArg.bracesDisplay:
+        return r'\right\}';
       case TeXArg.brackets:
-      case TeXArg.bracketsSuper:
-      case TeXArg.bracketsSub:
-        return ']';
+        return r'\right]';
       default:
-        return ')';
+        return r'\right)';
     }
   }
 
@@ -250,22 +248,25 @@ enum TeXArg {
   /// In most of the cases, braces will be used. (E.g arguments of fractions).
   braces,
 
+  /// ^{ }
+  ///
   /// SuperScript
   bracesSuper,
 
+  /// _{ }
+  ///
   /// SubScript
   bracesSub,
+
+  /// \left \{ \right \}
+  ///
+  /// Displays the braces
+  bracesDisplay,
 
   /// [ ]
   ///
   /// Brackets are only used for the nth root at the moment.
   brackets,
-
-  /// SuperScript
-  bracketsSuper,
-
-  /// SubScript
-  bracketsSub,
 
   /// ()
   ///
