@@ -157,6 +157,10 @@ class TeXFunction extends TeX {
         return r'\left\{';
       case TeXArg.brackets:
         return r'\left[';
+      case TeXArg.angleBrackets:
+        return r'\left<';
+      case TeXArg.bars:
+        return r'\left|';
       default:
         return r'\left(';
     }
@@ -173,6 +177,10 @@ class TeXFunction extends TeX {
         return r'\right\}';
       case TeXArg.brackets:
         return r'\right]';
+      case TeXArg.angleBrackets:
+        return r'\right>';
+      case TeXArg.bars:
+        return r'\right|';
       default:
         return r'\right)';
     }
@@ -274,4 +282,14 @@ enum TeXArg {
   /// for functions like sin, cos, tan, etc. as well, so the user doesn't have
   /// to close the parentheses manually.
   parentheses,
+
+  /// < >
+  ///
+  /// Angle brackets are used for the inner product.
+  angleBrackets,
+
+  /// | |
+  ///
+  /// bars
+  bars,
 }
