@@ -188,12 +188,26 @@ class TeXFunction extends TeX {
 
   @override
   String buildString({Color? cursorColor}) {
-    final buffer = StringBuffer(expression);
+    //final buffer = StringBuffer(expression);
+
+    var buildStr = expression;
+
     for (var i = 0; i < args.length; i++) {
-      buffer.write(openingChar(args[i]));
-      buffer.write(argNodes[i].buildTeXString(cursorColor: cursorColor));
-      buffer.write(closingChar(args[i]));
+      var argStr = _buildArgString(i, cursorColor: cursorColor);
+      if (buildStr.contains('#$i')) {
+        buildStr.replaceFirst('#$i', argStr);
+      } else {
+        buildStr += argStr;
+      }
     }
+    return buildStr;
+  }
+
+  String _buildArgString(int index, {Color? cursorColor}) {
+    final buffer = StringBuffer();
+    buffer.write(openingChar(args[index]));
+    buffer.write(argNodes[index].buildTeXString(cursorColor: cursorColor));
+    buffer.write(closingChar(args[index]));
     return buffer.toString();
   }
 }
