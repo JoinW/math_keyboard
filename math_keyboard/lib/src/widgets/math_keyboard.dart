@@ -366,6 +366,7 @@ class _Buttons extends StatelessWidget {
                             flex: config.flex,
                             icon: config.icon,
                             label: config.label,
+                            asTex: config.asTex ?? false,
                             onTap: () => controller.setPage(config.pageNum),
                             highlightLevel: 1,
                           )

@@ -90,13 +90,14 @@ class SubmitButtonConfig extends KeyboardButtonConfig {
 class PageButtonConfig extends KeyboardButtonConfig {
   /// Constructs a [PageButtonConfig].
   const PageButtonConfig(
-      {int? flex, required this.pageNum, this.icon, this.label})
+      {int? flex, required this.pageNum, this.icon, this.label, this.asTex})
       : super(flex: flex);
 
   /// page number to toggle to.
   final int pageNum;
   final IconData? icon;
   final String? label;
+  final bool? asTex;
 }
 
 /// List of keyboard button configs for the digits from 0-9.
