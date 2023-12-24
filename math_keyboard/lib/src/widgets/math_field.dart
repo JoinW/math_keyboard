@@ -9,6 +9,7 @@ import 'package:math_keyboard/src/foundation/node.dart';
 import 'package:math_keyboard/src/widgets/decimal_separator.dart';
 import 'package:math_keyboard/src/widgets/math_keyboard.dart';
 import 'package:math_keyboard/src/widgets/view_insets.dart';
+import 'package:math_keyboard/type.dart';
 
 /// Widget that is like a [TextField] for math expressions.
 ///
