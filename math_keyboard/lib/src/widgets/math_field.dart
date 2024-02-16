@@ -839,13 +839,13 @@ class MathFieldEditingController extends ChangeNotifier {
     if (tex.startsWith('^')) {
       addPow(func);
     }
-    // The same applies for fractions.
-    else if (tex == r'\frac') {
-      addFrac(func);
-    } else {
-      currentNode.addTeX(func);
-      currentNode = func.argNodes.first;
-    }
+    // // The same applies for fractions.
+    // else if (tex == r'\frac') {
+    //   addFrac(func);
+    // } else {
+    currentNode.addTeX(func);
+    currentNode = func.argNodes.first;
+    //}
     currentNode.setCursor();
     notifyListeners();
   }
