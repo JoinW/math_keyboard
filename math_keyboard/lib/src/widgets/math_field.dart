@@ -823,6 +823,13 @@ class MathFieldEditingController extends ChangeNotifier {
     }
   }
 
+  /// Navigate to the end node.
+  void goEnd() {
+    while (currentNode.shiftCursorRight() != NavigationState.end) {
+      continue;
+    }
+  }
+
   /// Add leaf to the current node.
   void addLeaf(String tex) {
     currentNode.addTeX(TeXLeaf(tex));
