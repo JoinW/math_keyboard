@@ -825,8 +825,8 @@ class MathFieldEditingController extends ChangeNotifier {
 
   /// Navigate to the end node.
   void goEnd() {
-    while (currentNode.shiftCursorRight() != NavigationState.end) {
-      continue;
+    while (currentNode.parent != null) {
+      goNext();
     }
   }
 
